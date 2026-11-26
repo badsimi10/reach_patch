@@ -4,8 +4,9 @@ WORKDIR /app
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    iputils-ping libcap2-bin && \
-    setcap cap_net_raw+ep /usr/bin/ping && \
+      iputils-ping libcap2-bin && \
+    setcap -r "$(command -v ping)" && \
+    chmod 755 "$(command -v ping)" && \
     rm -rf /var/lib/apt/lists/*
 
 COPY package.json package-lock.json* ./
